@@ -51,6 +51,13 @@
     #pagination li.active {
       color: white;
     }
+    .progress {
+      display: none ;
+      margin: 0;
+      position: fixed;
+      top: 0;
+      z-index: 100;
+    }
   </style>
 </head>
 <body>
@@ -60,6 +67,9 @@
         <li><a href="#">关于</a></li>
       </ul>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+     <div class="progress">
+      <div class="indeterminate"></div>
     </div>
   </nav>
   <div class="section no-pad-bot" id="index-banner">
@@ -87,30 +97,37 @@
           </li>
         <% }); %>
       </ul>
-       <div id="pagination">
+       <ul id="pagination" class="pagination">
        </div>
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
-  <script src="js/materialize-pagination.js"></script>
+  <script src="js/jqPaginator.min.js"></script>
   <script>
       var pageNo = <%= pageNo %>;
       var firstClick = true;
-      $('#pagination').materializePagination({
-        lastPage: pageNo,
-        firstPage:  1,
-        align: 'left', 
-        urlParameter: 'page',
-        useUrlParameter: true,
-        onClickCallback: function(page){
-          if (!firstClick) {
-            window.location.href = "http://localhost:3002/search?q=" +
-              $('#search')[0].value + '&page=' + page
+        window.onload = function() {
+          $('#pagination').jqPaginator({
+          totalPages: pageNo,
+          visiblePages: 8,
+          currentPage: <%= curPage %>,
+          first: '<li class="waves-effect">首页</li>',
+          last: '<li class="waves-effect">末页</li>',
+          prev: '<li class="prev"><a href="javascript:;"><i class="material-icons">chevron_left</i></a></li>',
+          next: '<li class="next"><a href="javascript:;"><i class="material-icons">chevron_right</i></a></li>',
+          page: '<li class="waves-effect"><a href="javascript:;">{{page}}</a></li>',
+          onPageChange: function (num, type) {
+            if (!firstClick) {
+              $('.progress').show()
+              window.location.href = "http://localhost:3002/search?q=" +
+                $('#search')[0].value + '&page=' + num
+            }
+            firstClick = false
           }
-          firstClick = false
-        }
-      });
+        });
+      }
+
   </script>
   </body>
 </html>

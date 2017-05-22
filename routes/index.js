@@ -27,8 +27,8 @@ router.get('/search', function(req, res) {
         "fields": {
           "title": {},
           "content": {
-            "fragment_size" : 50,
-            "number_of_fragments" : 3,
+            "fragment_size" : 100,
+            "number_of_fragments" : 2,
             "no_match_size": 0
           }
         }
@@ -36,10 +36,12 @@ router.get('/search', function(req, res) {
     }
   }).then(function (body) {
       let articleList = body.hits.hits
-      console.log(articleList.length)
+      // console.log(articleList.length)
       console.log(req.query.page)
+      console.log(body.hits.total)
       res.render('article_list', {
         pageNo: Math.ceil(body.hits.total/10),
+        curPage: req.query.page ? req.query.page : 1,
         searchStr: req.query.q,
         articles: articleList
     })
