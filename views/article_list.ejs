@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title></title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <style>
+    .input-field.col label {
+      left: 0;
+    }
+    form {
+      margin-top: 15px; 
+    }
+    label.active {
+      -webkit-transform: translateY(0) !important; 
+      transform: translateY(0) !important;
+    }
+    input#search {
+      box-sizing: border-box;
+      padding-left: 30px;
+    }
+    a.blog-link:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    em {
+      font-style: normal;
+      color: #ee6e73;
+    }
+    h5 {
+      font-size: 18px;
+    }
+    div.badge {
+      height: 18px;
+    }
+    span.badge {
+      float: left;
+      margin-left: 0;
+    }
+    #pagination li {
+      color: #444;
+      display: inline-block;
+      font-size: 1.2rem;
+      padding: 0 10px;
+      line-height: 30px;
+    }
+    #pagination li.active {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">清一搜</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">关于</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <form action="/search" method="get">
+          <div class="input-field col s12">
+            <input id="search" value=<%- searchStr %> name="q" type="text" class="validate">
+            <label for="password"><i class="material-icons">search</i></label>
+          </div>
+      </form>
+      <ul class="collection">
+        <% articles.forEach(function(article){ %>
+          <li class="collection-item ">
+            <h5 class="title">
+              <a class="blog-link" target="_blank" href= <%- article._source.url %> >
+                <%- article.highlight.title || article._source.title%>
+              </a>
+            </h5>
+            <div class="badge">
+              <span class="new badge gray" 
+              data-badge-caption= <%- article._source.createTime.slice(0,10) %>></span>
+            </div>
+            <p >...<%- article.highlight.content|| article._source.content.slice(0, 100) %>...
+            </p>
+          </li>
+        <% }); %>
+      </ul>
+       <div id="pagination">
+       </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/materialize-pagination.js"></script>
+  <script>
+      var pageNo = <%= pageNo %>;
+      var firstClick = true;
+      $('#pagination').materializePagination({
+        lastPage: pageNo,
+        firstPage:  1,
+        align: 'left', 
+        urlParameter: 'page',
+        useUrlParameter: true,
+        onClickCallback: function(page){
+          if (!firstClick) {
+            window.location.href = "http://localhost:3002/search?q=" +
+              $('#search')[0].value + '&page=' + page
+          }
+          firstClick = false
+        }
+      });
+  </script>
+  </body>
+</html>
