@@ -5,7 +5,7 @@ var insertDocuments = require('../lib/mongo').insertDocuments
 var mongoUrl = require('../config/default.js').mongodb
 var collection = 'sina_blog'
 
-var startUrl = 'http://blog.sina.com.cn/s/blog_4f7cd6a10102vf9a.html'
+var startUrl = 'http://blog.sina.com.cn/s/blog_4f7cd6a101000dee.html'
 
 function crawl(url) {
     request.get(url)

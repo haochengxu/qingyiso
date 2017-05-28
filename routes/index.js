@@ -20,14 +20,14 @@ router.get('/search', function(req, res) {
       "query": {
         "multi_match": {
           "query": req.query.q,
-          "fields": ["title", "content"]
+          "fields": [ "content"]
         }
       },
       "highlight": {
         "fields": {
-          "title": {},
+          // "title": {},
           "content": {
-            "fragment_size" : 100,
+            "fragment_size" : 80,
             "number_of_fragments" : 2,
             "no_match_size": 0
           }
@@ -40,6 +40,7 @@ router.get('/search', function(req, res) {
       console.log(req.query.page)
       console.log(body.hits.total)
       res.render('article_list', {
+        total: body.hits.total,
         pageNo: Math.ceil(body.hits.total/10),
         curPage: req.query.page ? req.query.page : 1,
         searchStr: req.query.q,

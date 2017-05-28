@@ -58,6 +58,9 @@
       top: 0;
       z-index: 100;
     }
+    ul.collection {
+      border: 0;
+    }
   </style>
 </head>
 <body>
@@ -80,6 +83,7 @@
             <label for="password"><i class="material-icons">search</i></label>
           </div>
       </form>
+      <p>共<%- total %> 条搜索结果</p>
       <ul class="collection">
         <% articles.forEach(function(article){ %>
           <li class="collection-item ">
@@ -108,24 +112,26 @@
       var pageNo = <%= pageNo %>;
       var firstClick = true;
         window.onload = function() {
-          $('#pagination').jqPaginator({
-          totalPages: pageNo,
-          visiblePages: 8,
-          currentPage: <%= curPage %>,
-          first: '<li class="waves-effect">首页</li>',
-          last: '<li class="waves-effect">末页</li>',
-          prev: '<li class="prev"><a href="javascript:;"><i class="material-icons">chevron_left</i></a></li>',
-          next: '<li class="next"><a href="javascript:;"><i class="material-icons">chevron_right</i></a></li>',
-          page: '<li class="waves-effect"><a href="javascript:;">{{page}}</a></li>',
-          onPageChange: function (num, type) {
-            if (!firstClick) {
-              $('.progress').show()
-              window.location.href = "http://localhost:3002/search?q=" +
-                $('#search')[0].value + '&page=' + num
+          if (pageNo > 0 ) {
+            $('#pagination').jqPaginator({
+            totalPages: pageNo,
+            visiblePages: 8,
+            currentPage: <%= curPage %>,
+            first: '<li class="waves-effect">首页</li>',
+            last: '<li class="waves-effect">末页</li>',
+            prev: '<li class="prev"><a href="javascript:;"><i class="material-icons">chevron_left</i></a></li>',
+            next: '<li class="next"><a href="javascript:;"><i class="material-icons">chevron_right</i></a></li>',
+            page: '<li class="waves-effect"><a href="javascript:;">{{page}}</a></li>',
+            onPageChange: function (num, type) {
+              if (!firstClick) {
+                $('.progress').show()
+                window.location.href = "http://localhost:3002/search?q=" +
+                  $('#search')[0].value + '&page=' + num
+              }
+              firstClick = false
             }
-            firstClick = false
-          }
-        });
+          });
+        }
       }
 
   </script>
