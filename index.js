@@ -12,6 +12,6 @@ app.use(express.static('public'));
 
 
 
-app.listen(9200, function() {
-    console.log(123)
+app.listen(3000, function() {
+    console.log("node listening at 3000")
 });
