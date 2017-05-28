@@ -12,6 +12,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/search', function(req, res) {
+  console.log(req.query)
   client.search({
     index: 'qingyi_article',
     body: {
