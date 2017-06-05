@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title></title>
+  <title>清一搜</title>
 
   <!-- CSS  -->
   <link href="http://cdn.bootcss.com/materialize/0.98.2/css/materialize.min.css" rel="stylesheet">
@@ -65,11 +65,11 @@
 </head>
 <body>
   <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">清一搜</a>
+    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">清一搜</a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="#">关于</a></li>
+        <li><a href="/about">关于</a></li>
       </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      <!--<a href="/about" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>-->
     </div>
      <div class="progress">
       <div class="indeterminate"></div>
@@ -79,7 +79,7 @@
     <div class="container">
       <form action="/search" method="get">
           <div class="input-field col s12">
-            <input id="search" value=<%- searchStr %> name="q" type="text" class="validate">
+            <input id="search"  name="q" type="text" class="validate" value=<%- searchStr %>>
             <label for="password"><i class="material-icons">search</i></label>
           </div>
       </form>
@@ -126,6 +126,7 @@
               if (!firstClick) {
                 $('.progress').show()
                 window.location.href = "http://47.94.85.50/search?q=" +
+                // window.location.href = "http://localhost:3000/search?q=" +
                   $('#search')[0].value + '&page=' + num
               }
               firstClick = false

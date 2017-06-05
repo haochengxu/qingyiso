@@ -10,9 +10,12 @@ var client = new elasticsearch.Client({
 router.get('/', function(req, res) {
   res.render('index', {});
 });
+router.get('/about', function(req, res) {
+  res.render('about', {});
+});
 
 router.get('/search', function(req, res) {
-  console.log(req.query)
+  // console.log(req.query)
   client.search({
     index: 'qingyi_article',
     body: {
@@ -21,12 +24,12 @@ router.get('/search', function(req, res) {
       "query": {
         "multi_match": {
           "query": req.query.q,
-          "fields": [ "content"]
+          "fields": [ "content", "title"]
         }
       },
       "highlight": {
         "fields": {
-          // "title": {},
+          "title": {},
           "content": {
             "fragment_size" : 80,
             "number_of_fragments" : 2,
@@ -37,16 +40,22 @@ router.get('/search', function(req, res) {
     }
   }).then(function (body) {
       let articleList = body.hits.hits
-      // console.log(articleList.length)
+      console.log(articleList.length)
       console.log(req.query.page)
       console.log(body.hits.total)
-      res.render('article_list', {
-        total: body.hits.total,
-        pageNo: Math.ceil(body.hits.total/10),
-        curPage: req.query.page ? req.query.page : 1,
-        searchStr: req.query.q,
-        articles: articleList
-    })
+      console.log(req.query)
+      if (req.query.q) {
+          res.render('article_list', {
+            total: body.hits.total,
+            pageNo: Math.ceil(body.hits.total/10),
+            curPage: req.query.page ? req.query.page : 1,
+            searchStr: req.query.q,
+            articles: articleList
+          })
+      } else {
+        res.render('index', {});
+      }
+
   }, function (error) {
     console.trace(error.message);
   });
