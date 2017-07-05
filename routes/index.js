@@ -43,7 +43,7 @@ router.get('/search', function(req, res) {
       console.log(articleList.length)
       console.log(req.query.page)
       console.log(body.hits.total)
-      console.log(req.query)
+      console.log(req.query.q)
       if (req.query.q) {
           res.render('article_list', {
             total: body.hits.total,
