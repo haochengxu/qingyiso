@@ -96,7 +96,7 @@
               <span class="new badge gray" 
               data-badge-caption= <%- article._source.createTime.slice(0,10) %>></span>
             </div>
-            <p >...<%- article.highlight.content|| article._source.content.slice(0, 100) %>...
+            <p >...<%- article.highlight.content|| article._source.content %>...
             </p>
           </li>
         <% }); %>

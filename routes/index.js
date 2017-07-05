@@ -31,8 +31,8 @@ router.get('/search', function(req, res) {
         "fields": {
           "title": {},
           "content": {
-            "fragment_size" : 80,
-            "number_of_fragments" : 2,
+            "fragment_size" : 100,
+            "number_of_fragments" : 4,
             "no_match_size": 0
           }
         }
